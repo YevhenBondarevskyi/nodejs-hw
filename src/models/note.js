@@ -26,4 +26,14 @@ const noteSchema = new Schema(
     versionKey: false,
   },
 );
+
+noteSchema.index(
+  { title: 'text', content: 'text' },
+  {
+    name: 'noteTextIndex',
+    weights: { title: 10, content: 5 },
+    default_language: 'english',
+  },
+);
+
 export const Note = model('Note', noteSchema);

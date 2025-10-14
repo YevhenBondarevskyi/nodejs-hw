@@ -1,16 +1,16 @@
 import express from 'express';
 import 'dotenv/config';
 import cors from 'cors';
+import { errors } from 'celebrate';
 
 import { connectMongoDB } from './db/connectMongoDB.js';
-import { errors } from 'celebrate';
 import { logger } from './middleware/logger.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
-
 import notesRoutes from './routes/notesRoutes.js';
 
 const app = express();
+
 const PORT = process.env.PORT ?? 3030;
 
 app.use(logger);
