@@ -106,7 +106,9 @@ export const requestResetEmail = async (req, res, next) => {
 
   const user = await User.findOne({ email });
   if (!user) {
-    return next(createHttpError(404, 'User not found'));
+    return res.status(200).json({
+      message: 'If this email exists, a reset link has been sent',
+    });
   }
 
   const resetToken = jwt.sign(
@@ -139,9 +141,8 @@ export const requestResetEmail = async (req, res, next) => {
     );
     return;
   }
-
   res.status(200).json({
-    message: 'Password reset email sent successfully',
+    message: 'If this email exists, a reset link has been sent',
   });
 };
 
@@ -166,7 +167,7 @@ export const resetPassword = async (req, res, next) => {
   await User.updateOne({ _id: user._id }, { password: hashedPassword });
 
   await Session.deleteMany({ userId: user._id });
-  
+
   res.status(200).json({
     message: 'Password reset successfully. Please log in again.',
   });
